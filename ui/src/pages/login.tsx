@@ -1,5 +1,5 @@
 import { Head, Login } from "@/components";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 const LoginPage = () => {
@@ -15,6 +15,14 @@ const LoginPage = () => {
         py={2}
       >
         <Box width={400}>
+          <Typography
+            variant="overline"
+            component="div"
+            textAlign="center"
+            mb={1}
+          >
+            Plant-tracker
+          </Typography>
           <Login />
         </Box>
       </Box>

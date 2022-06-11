@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, LinearProgress } from "@mui/material";
+import { Box, LinearProgress, Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { useIsFetching, useIsMutating } from "react-query";
+import { Container } from "@mui/system";
 
 const Layout = () => {
   const isFetching = useIsFetching();
@@ -15,6 +16,13 @@ const Layout = () => {
           <LinearProgress />
         </Box>
       )}
+      <header>
+        <Container>
+          <Typography variant="overline" component="div" my={2}>
+            Plant-tracker
+          </Typography>
+        </Container>
+      </header>
       <Outlet />
     </Box>
   );

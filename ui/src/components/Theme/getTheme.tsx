@@ -13,20 +13,14 @@ function getTheme(mode: "light" | "dark") {
         h1: {
           fontWeight: 900,
           fontSize: "2rem",
-          paddingTop: "3rem",
-          paddingBottom: "2rem",
         },
         h2: {
           fontWeight: 900,
           fontSize: "1.25rem",
-          paddingTop: "2rem",
-          paddingBottom: "1rem",
         },
         h3: {
           fontWeight: 900,
           fontSize: "1rem",
-          paddingTop: 2,
-          paddingBottom: 1,
         },
         subtitle1: {
           fontSize: "0.9rem",
@@ -290,7 +284,7 @@ function getTheme(mode: "light" | "dark") {
       },
       MuiContainer: {
         defaultProps: {
-          maxWidth: "xl",
+          maxWidth: "lg",
         },
       },
       MuiAccordion: {

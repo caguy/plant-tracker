@@ -3,7 +3,7 @@ import sensible from "@fastify/sensible";
 import helmet from "@fastify/helmet";
 import autoload from "@fastify/autoload";
 import cors from "@fastify/cors";
-import underPressure from "under-pressure";
+import underPressure from "@fastify/under-pressure";
 import config from "./config/config.js";
 import db from "./plugins/db.js";
 import swagger from "./plugins/swagger.js";
@@ -21,14 +21,11 @@ const server = (options: FastifyServerOptions = {}) => {
   app.register(helmet, { global: true });
   app.register(cors);
   app.register(authentication);
-
-  /*   app.register(underPressure, {
-    maxEventLoopDelay: 1000,
-    maxHeapUsedBytes: 100000000,
-    maxRssBytes: 100000000,
-    maxEventLoopUtilization: 0.98,
+  app.register(underPressure, {
+    maxEventLoopDelay: 10,
+    retryAfter: 50,
   });
- */
+
   app.register(autoload, {
     dir: join(dirname(fileURLToPath(import.meta.url)), "services"),
     forceESM: true,
