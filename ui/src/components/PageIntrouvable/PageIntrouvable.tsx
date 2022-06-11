@@ -7,7 +7,9 @@ const PageIntrouvable = () => {
 
   return (
     <Container>
-      <Typography variant="h1">Page introuvable</Typography>
+      <Typography variant="h1" mb={2}>
+        Page introuvable
+      </Typography>
       <Typography>
         La ressource que vous cherchez à atteindre n&apos;existe pas.
       </Typography>

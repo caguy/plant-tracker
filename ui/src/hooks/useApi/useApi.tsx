@@ -2,6 +2,7 @@ import React from "react";
 import { useUser } from "@/hooks";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { ApiService } from "@/services";
+import { useQuery } from "react-query";
 
 const useApi = () => {
   const { accessToken, logout, isAuthenticated } = useUser();
@@ -32,7 +33,12 @@ const useApi = () => {
     [accessToken, isAuthenticated, logout]
   );
 
-  return { ...ApiService(fetch) };
+  const apiServices = ApiService(fetch);
+
+  return {
+    ...apiServices,
+    useGetAllPlants: () => useQuery(["getAllPlants"], apiServices.getAllPlants),
+  };
 };
 
 export default useApi;
