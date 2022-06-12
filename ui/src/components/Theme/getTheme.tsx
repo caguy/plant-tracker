@@ -102,8 +102,7 @@ function getTheme(mode: "light" | "dark") {
               "color",
               "outline",
             ]),
-            color: theme.palette.primary.contrastText,
-            "&:hover": {
+            "&.MuiButton-containedPrimary:hover": {
               backgroundColor: theme.palette.primary.light,
             },
             "&.Mui-focusVisible, &:active": {

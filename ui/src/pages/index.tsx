@@ -4,12 +4,12 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import { PLANT_ROUTE } from "@/settings/routes.settings";
 import { useNavigate } from "react-router-dom";
+import { useIsMutating } from "react-query";
 
 const gridItemProps = {
   xs: 12,
   sm: 6,
-  md: 4,
-  lg: 3,
+  lg: 4,
 };
 
 const IndexPage = () => {
@@ -18,10 +18,11 @@ const IndexPage = () => {
   const plants = useGetAllPlants();
   const createPlant = useCreatePlant();
   const navigate = useNavigate();
+  const isMutating = !!useIsMutating();
 
   async function onNewPlant() {
     const newPlant = await createPlant.mutateAsync({ name: "Nouvelle plante" });
-    navigate(PLANT_ROUTE(newPlant._id));
+    navigate(PLANT_ROUTE(newPlant._id), { state: { new: true } });
   }
 
   return (
@@ -49,7 +50,8 @@ const IndexPage = () => {
                   <Grid item key={plant._id} {...gridItemProps}>
                     <PlantCard
                       name={plant.name}
-                      disabled={createPlant.isLoading || plants.isFetching}
+                      disabled={isMutating || plants.isFetching}
+                      updated={plant.updatedAt}
                       onClick={() => navigate(PLANT_ROUTE(plant._id))}
                     />
                   </Grid>
@@ -58,7 +60,7 @@ const IndexPage = () => {
                   <PlantCard
                     name="Ajouter une plante"
                     newPlant
-                    disabled={createPlant.isLoading || plants.isFetching}
+                    disabled={isMutating || plants.isFetching}
                     onClick={onNewPlant}
                   />
                 </Grid>

@@ -1,8 +1,9 @@
 import React from "react";
 import { useUser } from "@/hooks";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { ApiService } from "@/services";
+import { ApiError, ApiService } from "@/services";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Plant } from "@/services/Api/PlantService";
 
 const useApi = () => {
   const { accessToken, logout, isAuthenticated } = useUser();
@@ -44,6 +45,30 @@ const useApi = () => {
       }),
     useCreatePlant: () =>
       useMutation((props: { name: string }) => apiServices.createPlant(props), {
+        onSuccess: () => {
+          queryClient.refetchQueries(["getAllPlants"]);
+        },
+      }),
+    useGetPlantById: (id: string) =>
+      useQuery<Plant, ApiError>(["getPlantById", { id }], () =>
+        apiServices.getPlantById(id)
+      ),
+    useUpdatePlant: () =>
+      useMutation(
+        (props: { id: string; data: Partial<Plant> }) =>
+          apiServices.updatePlant(props.id, props.data),
+        {
+          onSuccess: (result) => {
+            queryClient.refetchQueries(["getAllPlants"]);
+            queryClient.setQueryData(
+              ["getPlantById", { id: result._id }],
+              result
+            );
+          },
+        }
+      ),
+    useDeletePlant: () =>
+      useMutation((id: string) => apiServices.deletePlant(id), {
         onSuccess: () => {
           queryClient.refetchQueries(["getAllPlants"]);
         },
