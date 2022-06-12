@@ -1,5 +1,6 @@
 import { useUser } from "@/hooks";
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -62,6 +63,7 @@ const Login = () => {
     <Box
       p={4}
       borderRadius={(theme) => theme.shape.borderRadius}
+      bgcolor="background.paper"
       sx={{
         border: 1,
         borderColor: (theme) => theme.palette.grey[800],
@@ -72,6 +74,11 @@ const Login = () => {
       <Typography variant="h1" p={0}>
         Connexion
       </Typography>
+      {query.isError && (
+        <Alert severity="error" variant="filled" sx={{ marginY: 2 }}>
+          {query.error.response?.data?.message || "Serveur injoignable"}
+        </Alert>
+      )}
       <form onSubmit={handleSubmit(() => query.refetch())}>
         <Box my={2}>
           <FormControl error={!!errors.username} disabled={query.isLoading}>
@@ -112,14 +119,7 @@ const Login = () => {
             )}
           </FormControl>
         </Box>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Box>
-            {query.isError && (
-              <Typography variant="subtitle1" color="error">
-                {query.error.response?.data?.message || "Serveur injoignable"}
-              </Typography>
-            )}
-          </Box>
+        <Box display="flex" justifyContent="flex-end">
           <Button type="submit" variant="contained" disabled={query.isLoading}>
             Se connecter
           </Button>

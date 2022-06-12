@@ -2,10 +2,11 @@ import React from "react";
 import { useUser } from "@/hooks";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { ApiService } from "@/services";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 const useApi = () => {
   const { accessToken, logout, isAuthenticated } = useUser();
+  const queryClient = useQueryClient();
 
   const fetch = React.useCallback(
     async <T,>(endpoint: string, options?: AxiosRequestConfig) => {
@@ -37,7 +38,16 @@ const useApi = () => {
 
   return {
     ...apiServices,
-    useGetAllPlants: () => useQuery(["getAllPlants"], apiServices.getAllPlants),
+    useGetAllPlants: () =>
+      useQuery(["getAllPlants"], apiServices.getAllPlants, {
+        staleTime: 60000,
+      }),
+    useCreatePlant: () =>
+      useMutation((props: { name: string }) => apiServices.createPlant(props), {
+        onSuccess: () => {
+          queryClient.refetchQueries(["getAllPlants"]);
+        },
+      }),
   };
 };
 

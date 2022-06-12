@@ -1,17 +1,17 @@
-type Plant = {
-  id: string;
+export interface IPlant {
+  _id: string;
   name: string;
-  leaves: Leaf[];
-};
+  leaves: ILeaf[];
+}
 
-type Leaf = {
+export interface ILeaf {
   date: Date;
   type: "leaf" | "flower";
   index: number;
-  measurements: Measurement[];
-};
+  measurements: IMeasurement[];
+}
 
-type Measurement = {
+export interface IMeasurement {
   date: Date;
   value: number;
-};
+}

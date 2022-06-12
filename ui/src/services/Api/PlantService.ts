@@ -1,11 +1,21 @@
 import { FetchFunction } from "./ApiTypes";
 
+export type Plant = {
+  _id: string;
+  name: string;
+  leaves: void[];
+};
+
 export default (fetch: FetchFunction) => ({
-  getTMP: async () => await fetch<null>("/"),
   getAllPlants: async () => {
-    return Promise.resolve([
-      { id: "A", name: "Plante 1" },
-      { id: "B", name: "Plante 2" },
-    ]);
+    return (await fetch<Plant[]>("/plants")).data;
+  },
+  createPlant: async (props: { name: string }) => {
+    return (
+      await fetch<Plant>("/plants", {
+        method: "POST",
+        data: props,
+      })
+    ).data;
   },
 });

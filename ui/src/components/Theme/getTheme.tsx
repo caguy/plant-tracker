@@ -1,12 +1,13 @@
 import React from "react";
 import { createTheme, responsiveFontSizes } from "@mui/material";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 
 function getTheme(mode: "light" | "dark") {
   const theme = responsiveFontSizes(
     createTheme({
       palette: {
         primary: { main: green.A700 },
+        error: { main: red.A200 },
         mode,
       },
       typography: {
@@ -78,6 +79,13 @@ function getTheme(mode: "light" | "dark") {
         defaultProps: {
           disableRipple: true,
         },
+        styleOverrides: {
+          root: {
+            "& .MuiCardActionArea-focusHighlight": {
+              backgroundColor: theme.palette.primary.main,
+            },
+          },
+        },
       },
       MuiButton: {
         defaultProps: {
@@ -94,6 +102,10 @@ function getTheme(mode: "light" | "dark") {
               "color",
               "outline",
             ]),
+            color: theme.palette.primary.contrastText,
+            "&:hover": {
+              backgroundColor: theme.palette.primary.light,
+            },
             "&.Mui-focusVisible, &:active": {
               backgroundColor: theme.palette.primary.dark,
               outline: `solid 3px ${theme.palette.primary.main}`,
@@ -122,9 +134,12 @@ function getTheme(mode: "light" | "dark") {
         styleOverrides: {
           root: {
             color: theme.palette.text.primary,
-            textDecodation: "none",
+            textDecoration: "none",
             "&:hover": {
               color: theme.palette.primary.main,
+            },
+            "&:active": {
+              color: theme.palette.primary.dark,
             },
           },
         },
@@ -217,7 +232,7 @@ function getTheme(mode: "light" | "dark") {
               color: theme.palette.primary.main,
             },
             "&.Mui-focused.Mui-error": {
-              color: theme.palette.error.dark,
+              color: theme.palette.error.main,
             },
             "&.Mui-disabled": {
               opacity: 1 - theme.palette.action.disabledOpacity,
@@ -273,7 +288,7 @@ function getTheme(mode: "light" | "dark") {
       },
       MuiGrid: {
         defaultProps: {
-          spacing: 4,
+          spacing: { xs: 2, md: 3 },
         },
       },
       MuiStack: {

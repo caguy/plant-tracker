@@ -13,6 +13,11 @@ const LoginPage = () => {
         justifyContent="center"
         px={2}
         py={2}
+        sx={{
+          backgroundImage: "url(plant.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "bottom right",
+        }}
       >
         <Box width={400}>
           <Typography
@@ -20,6 +25,7 @@ const LoginPage = () => {
             component="div"
             textAlign="center"
             mb={1}
+            color="common.black"
           >
             Plant-tracker
           </Typography>

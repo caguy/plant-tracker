@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
-import LeafSchema from "./LeafSchema";
+import { IPlant } from "../types/Plant";
+import LeafSchema from "./LeafSchema.js";
 
-const PlantSchema = new mongoose.Schema<Plant>({
+const PlantSchema = new mongoose.Schema<IPlant>({
   name: { type: String, required: true },
   leaves: [LeafSchema],
 });
