@@ -6,17 +6,25 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import PlantSvg from "./assets/plant-monochrome.svg";
+import PlantSvg from "@/assets/plant-monochrome.svg";
 import AddIcon from "@mui/icons-material/Add";
+import { formatDateForDisplay } from "@/utils";
 
 interface PlantCardProps {
   name: string;
   newPlant?: boolean;
   disabled?: boolean;
+  updated?: Date;
   onClick: () => void;
 }
 
-const PlantCard = ({ name, newPlant, disabled, onClick }: PlantCardProps) => {
+const PlantCard = ({
+  name,
+  newPlant,
+  disabled,
+  updated,
+  onClick,
+}: PlantCardProps) => {
   return (
     <Card
       variant="outlined"
@@ -54,15 +62,22 @@ const PlantCard = ({ name, newPlant, disabled, onClick }: PlantCardProps) => {
                 <PlantSvg />
               )}
             </Box>
-            <Typography
-              variant="h3"
-              flexGrow={1}
-              fontWeight={(theme) =>
-                newPlant ? "regular" : theme.typography.h3.fontWeight
-              }
-            >
-              {name}
-            </Typography>
+            <Box>
+              <Typography
+                variant="h3"
+                flexGrow={1}
+                fontWeight={(theme) =>
+                  newPlant ? "regular" : theme.typography.h3.fontWeight
+                }
+              >
+                {name}
+              </Typography>
+              {updated && (
+                <Typography variant="caption">
+                  Mise à jour le {formatDateForDisplay(updated)}
+                </Typography>
+              )}
+            </Box>
           </Box>
         </CardContent>
       </CardActionArea>

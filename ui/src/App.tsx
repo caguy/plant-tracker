@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from "@/components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserProvider } from "@/hooks";
+import { ModalProvider, UserProvider } from "@/hooks";
 import { HelmetProvider } from "react-helmet-async";
 import * as routes from "@/settings/routes.settings";
 
@@ -22,19 +22,21 @@ const App = () => {
         <BrowserRouter>
           <UserProvider>
             <HelmetProvider>
-              <Routes>
-                <Route path={routes.LOGIN_ROUTE} element={<LoginPage />} />
-                <Route element={<PrivateRoute />}>
-                  <Route element={<Layout />}>
-                    <Route path={routes.HOME_ROUTE} element={<IndexPage />} />
-                    <Route
-                      path={routes.PLANT_ROUTE(":id")}
-                      element={<PlantPage />}
-                    />
-                    <Route path="*" element={<PageIntrouvable />} />
+              <ModalProvider>
+                <Routes>
+                  <Route path={routes.LOGIN_ROUTE} element={<LoginPage />} />
+                  <Route element={<PrivateRoute />}>
+                    <Route element={<Layout />}>
+                      <Route path={routes.HOME_ROUTE} element={<IndexPage />} />
+                      <Route
+                        path={routes.PLANT_ROUTE(":id")}
+                        element={<PlantPage />}
+                      />
+                      <Route path="*" element={<PageIntrouvable />} />
+                    </Route>
                   </Route>
-                </Route>
-              </Routes>
+                </Routes>
+              </ModalProvider>
             </HelmetProvider>
           </UserProvider>
         </BrowserRouter>
