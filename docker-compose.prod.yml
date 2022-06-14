@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  database-prod:
+    container_name: database-prod
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - plant-tracker-backend
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=Zn9CZN9LxSYNdiPotLnS
+
+  api-prod:
+    container_name: api-prod
+    build:
+      context: ./api
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3448:9000"
+    networks:
+      - plant-tracker-backend
+    links:
+      - database-prod
+
+  client-prod:
+    container_name: client-prod
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3449:80"
+    networks:
+      - frontend
+
+networks:
+  plant-tracker-backend:
+  frontend:

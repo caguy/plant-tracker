@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  database-dev:
+    container_name: database-dev
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./database:/data/db
+
+  api-dev:
+    container_name: api-dev
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./api:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "9000:9000"
+    links:
+      - database-dev
+    environment:
+      - DB_CONNECT=mongodb://database-dev:27017/plant-tracker
+      - NODE_ENV=development
+
+  client-dev:
+    container_name: client-dev
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./ui:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    environment:
+      - API_BASE_URI=http://localhost:9000/api
+      - NODE_ENV=development
